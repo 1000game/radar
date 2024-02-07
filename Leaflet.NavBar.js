@@ -75,7 +75,7 @@
       }
     
       // Navigate to a different HTML path when clicking the home button
-      window.location.href = 'geomap.html';
+      window.location.href = 'index.html';
     },
     
 
