@@ -7,7 +7,13 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
     <link href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" rel="stylesheet"/>
+
+<link href="Leaflet.NavBar.css" rel="stylesheet"/>
+	
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+ <script src="Leaflet.NavBar.js"></script>
+	
     <style type="text/css">
         li {
             list-style: none;
@@ -284,6 +290,12 @@
         e.preventDefault();
         return false;
     }
+
+  var nav= L.control.navbar({
+            position:'topright'
+        
+        });nav.addTo(map)
+	
 </script>
 
 </body>
