@@ -1,0 +1,176 @@
+<!-- Created by Thomas S. -->
+
+<!-- Created by TK , reposted by T.S.-->
+
+<!--
+This code is taken as it was from this article written by TK:
+
+https://redstapler.co/cool-nebula-background-effect-three-js/
+
+ I am not the author of this code and just sharing it for learning purpose as intended by original Author (TK).The Author of this code has a Youtube channel called RedStapler with many other helpful content for Javascript programmers, definitely check it out.
+
+https://www.youtube.com/watch?v=5f5wwQb22tE
+-->
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Page Title</title>
+
+
+        
+
+
+
+
+
+	</head>	
+	
+	
+
+   
+
+   
+		
+	
+	
+	<body>
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+			<script await src="https://cdnjs.cloudflare.com/ajax/libs/three.js/108/three.min.js
+			
+			"></script>
+<script await src="https://cdn.jsdelivr.net/npm/postprocessing@6.7.0/build/postprocessing.min.js"></script>
+			
+	<script>
+	  let scene, camera, cloudParticles = [],composer;
+
+	  function init() {
+		scene = new THREE.Scene();
+		camera = new THREE.PerspectiveCamera(60,window.innerWidth / window.innerHeight,1,1000);
+		camera.position.z = 1;
+		camera.rotation.x = 1.16;
+		camera.rotation.y = -0.12;
+		camera.rotation.z = 0.27;
+
+		let ambient = new THREE.AmbientLight(0x555555);
+		scene.add(ambient);
+
+		let directionalLight = new THREE.DirectionalLight(0xff8c19);
+		directionalLight.position.set(35,-10,20);
+		scene.add(directionalLight);
+
+		
+
+		renderer = new THREE.WebGLRenderer();
+		renderer.setSize(window.innerWidth,window.innerHeight);
+		scene.fog = new THREE.FogExp2(0x0708090, 0.0005);
+		renderer.setClearColor(scene.fog.color);
+		document.body.appendChild(renderer.domElement);
+   
+   
+   
+   //picture one 
+   
+   
+		let loader = new THREE.TextureLoader();
+		loader.load("https://i.imgur.com/HDiNamF.png", function(texture){
+		  cloudGeo = new THREE.PlaneBufferGeometry(1000,900);
+		  cloudMaterial = new THREE.MeshLambertMaterial({
+			map:texture,
+			transparent: true
+		  });
+
+		  for(let p=30; p<100; p++) {
+			let cloud = new THREE.Mesh(cloudGeo, cloudMaterial);
+			cloud.position.set(
+			  Math.random()*700 -400,
+			  700, 
+			  Math.random()*500-500
+			);
+			cloud.rotation.x = 1.16;
+			cloud.rotation.y = -0.12;
+			cloud.rotation.z = Math.random()*2*Math.PI;
+			cloud.material.opacity = 0.55;
+			cloudParticles.push(cloud);
+			scene.add(cloud);
+		  }
+		}); 
+		
+		//	picture 2
+		
+	
+		 loader.load("https://i.imgur.com/kDzvFum.jpg", function(texture){
+
+		  const textureEffect = new POSTPROCESSING.TextureEffect({
+			blendFunction: POSTPROCESSING.BlendFunction.COLOR_DODGE,
+			texture: texture
+		  });
+		  textureEffect.blendMode.opacity.value 
+		  
+		  
+		 //الصورة الخلفية 
+		  
+		  
+		  = 0.0;
+
+		  const bloomEffect = new POSTPROCESSING.BloomEffect({
+				blendFunction: POSTPROCESSING.BlendFunction.COLOR_DODGE,
+				kernelSize: POSTPROCESSING.KernelSize.SMALL,
+				useLuminanceFilter: true,
+				luminanceThreshold: 0.0,
+				luminanceSmoothing: 0.0,
+			  });
+		  bloomEffect.blendMode.opacity.value = 1.2;
+
+		  let effectPass = new POSTPROCESSING.EffectPass(
+			camera,
+			bloomEffect,
+			textureEffect
+		  );
+		  effectPass.renderToScreen = true;
+
+		  composer = new POSTPROCESSING.EffectComposer(renderer);
+		  composer.addPass(new POSTPROCESSING.RenderPass(scene, camera));
+		  composer.addPass(effectPass);
+		  
+		  window.addEventListener("resize", onWindowResize, false);
+		  render();
+		});
+	  }
+	  function onWindowResize() {
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+		renderer.setSize(window.innerWidth, window.innerHeight);
+	  }//سرعة الحاب
+	  function render() {
+		cloudParticles.forEach(p => {
+		  p.rotation.z -=0.002;
+		});
+		composer.render(0.1);
+		requestAnimationFrame(render);
+	  }
+	  init();
+
+      
+     
+
+
+
+
+
+	</script>
+	</body>
+</html>
