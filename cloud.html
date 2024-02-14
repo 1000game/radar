@@ -47,7 +47,7 @@ https://www.youtube.com/watch?v=5f5wwQb22tE
 
 
 
-
+ <button onclick="navigateTohome()" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 30px;">العودة لصفحة الرئيسية</button>
 
 			<script await src="https://cdnjs.cloudflare.com/ajax/libs/three.js/108/three.min.js
 			
@@ -166,7 +166,14 @@ https://www.youtube.com/watch?v=5f5wwQb22tE
 
       
      
+ function navigateTohome() {
+        // Redirect to mapwth.html when the image is clicked
+        window.location.href = 'index.html';
+    }
 
+    init();
+    window.addEventListener("resize", onWindowResize, false);
+    render();
 
 
 
