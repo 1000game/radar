@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Page Title</title>
+	</head>	
+	
+	
+		
+	
+	
+	<body>
+			<script await src="https://cdnjs.cloudflare.com/ajax/libs/three.js/108/three.min.js
+			
+			"></script>
+<script await src="https://cdn.jsdelivr.net/npm/postprocessing@6.7.0/build/postprocessing.min.js"></script>
+			
+	<script>
+	  let scene, camera, cloudParticles = [],composer;
+
+	  function init() {
+		scene = new THREE.Scene();
+		camera = new THREE.PerspectiveCamera(60,window.innerWidth / window.innerHeight,1,1000);
+		camera.position.z = 1;
+		camera.rotation.x = 1.16;
+		camera.rotation.y = -0.12;
+		camera.rotation.z = 0.27;
+
+		let ambient = new THREE.AmbientLight(0x555555);
+		scene.add(ambient);
+
+		let directionalLight = new THREE.DirectionalLight(0xff8c19);
+
+//thecloud shape and colour 
+
+
+//black cloud = (10,5,5) 0x0C7C4BF.	0.0005
+
+
+//realistic pink cloud with bloue sky =(10,-3,5) 0x000354e , 0.0004
+
+//)cusmos(10,-9,15), 0x03544e , 0.0007
+
+
+//realistic red cloud and dark blue sky (35,-17,20) 0x01B2F3A 0.0005
+
+
+
+
+		directionalLight.position.set(10,-5,5);
+		scene.add(directionalLight);
+
+		
+//thecloud colour. 0x000354e.  0x03544e
+		renderer = new THREE.WebGLRenderer();
+		renderer.setSize(window.innerWidth,window.innerHeight);
+		scene.fog = new THREE.FogExp2(0x02F4F4F, 0.0004);
+		renderer.setClearColor(scene.fog.color);
+		document.body.appendChild(renderer.domElement);
+   
+   
+   
+   //picture one 
+   
+   
+		let loader = new THREE.TextureLoader();
+		loader.load("https://i.imgur.com/HDiNamF.png", function(texture){
+		  cloudGeo = new THREE.PlaneBufferGeometry(1000,900);
+		  cloudMaterial = new THREE.MeshLambertMaterial({
+			map:texture,
+			transparent: true
+		  });
+
+		  for(let p=30; p<100; p++) {
+			let cloud = new THREE.Mesh(cloudGeo, cloudMaterial);
+			cloud.position.set(
+			  Math.random()*700 -400,
+			  700, 
+			  Math.random()*500-500
+			);
+			cloud.rotation.x = 1.16;
+			cloud.rotation.y = -0.12;
+			cloud.rotation.z = Math.random()*2*Math.PI;
+			cloud.material.opacity = 0.55;
+			cloudParticles.push(cloud);
+			scene.add(cloud);
+		  }
+		}); 
+		
+		//	picture 2
+		
+	
+		 loader.load("https://upload.wikimedia.org/wikipedia/commons/8/88/Kingdom_Tower_at_night.JPG", function(texture){
+
+		  const textureEffect = new POSTPROCESSING.TextureEffect({
+			blendFunction: POSTPROCESSING.BlendFunction.COLOR_DODGE,
+			texture: texture
+		  });
+		  textureEffect.blendMode.opacity.value 
+		  
+		  
+		 //الصورة الخلفية 
+		  
+		  
+		  = 0.5;
+
+		  const bloomEffect = new POSTPROCESSING.BloomEffect({
+				blendFunction: POSTPROCESSING.BlendFunction.COLOR_DODGE,
+				kernelSize: POSTPROCESSING.KernelSize.SMALL,
+				useLuminanceFilter: true,
+				luminanceThreshold: 0.0,
+				luminanceSmoothing: 0.0,
+			  });
+		  bloomEffect.blendMode.opacity.value = 1.2;
+
+		  let effectPass = new POSTPROCESSING.EffectPass(
+			camera,
+			bloomEffect,
+			textureEffect
+		  );
+		  effectPass.renderToScreen = true;
+
+		  composer = new POSTPROCESSING.EffectComposer(renderer);
+		  composer.addPass(new POSTPROCESSING.RenderPass(scene, camera));
+		  composer.addPass(effectPass);
+		  
+		  window.addEventListener("resize", onWindowResize, false);
+		  render();
+		});
+	  }
+	  function onWindowResize() {
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+		renderer.setSize(window.innerWidth, window.innerHeight);
+	  }//سرعة الحاب
+	  function render() {
+		cloudParticles.forEach(p => {
+		  p.rotation.z -=0.001;
+		});
+		composer.render(0.1);
+		requestAnimationFrame(render);
+	  }
+	  init();
+	</script>
+	</body>
+</html>
