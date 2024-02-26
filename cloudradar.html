@@ -230,7 +230,7 @@
      * Stop the animation
      * Check if the animation timeout is set and clear it.
      */
-    function توقف() {
+    function stop() {
         if (animationTimer) {
             clearTimeout(animationTimer);
             animationTimer = false;
@@ -239,16 +239,16 @@
         return false;
     }
 
-    function أبداء() {
+    function play() {
         showFrame(animationPosition + 1);
 
         // Main animation driver. Run this function every 500 ms
-        animationTimer = setTimeout(أبداء, 500);
+        animationTimer = setTimeout(500, play);
     }
 
-    function أبداءتوقف() {
-        if (!توقف()) {
-            أبداء();
+    function playstop() {
+        if (!stop()) {
+            play();
         }
     }
 
