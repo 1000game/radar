@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>RainViewer API Example</title>
+    <title>سحب ورادار</title>
 
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -24,7 +24,7 @@
 <body>
 
 <ul style="text-align:center; position: absolute;top: 0; left: 0; right: 0; height: 80px;">
-    <li><input type="radio" name="kind" checked="checked" onchange="setKind('radar')">Radar (Past + Future) <input type="radio" name="kind" onchange="setKind('satellite')">Infrared Satellite</li>
+    <li><input type="radio" name="kind" checked="checked" onchange="setKind('radar')">Radar (الواقع+ المتوقع تجريبي) <input type="radio" name="kind" onchange="setKind('satellite')">السحب</li>
 
     <li><input type="button" onclick="stop(); showFrame(animationPosition - 1); return;" value="&lt;" /></li>
     <li><input type="button" onclick="playStop();" value="Play / Stop" /></li>
