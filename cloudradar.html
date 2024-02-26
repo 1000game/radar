@@ -24,7 +24,7 @@
 <body>
 
 <ul style="text-align:center; position: absolute;top: 0; left: 0; right: 0; height: 80px;">
-    <li><input type="radio" name="kind" checked="checked" onchange="setKind('radar')">Radar (الواقع+ المتوقع تجريبي) <input type="radio" name="kind" onchange="setKind('satellite')">السحب</li>
+    <li><input type="radio" name="kind" checked="checked" onchange="setKind('radar')">رادار)(الواقع+ المتوقع تجريبي) <input type="radio" name="kind" onchange="setKind('satellite')">السحب</li>
 
     <li><input type="button" onclick="stop(); showFrame(animationPosition - 1); return;" value="&lt;" /></li>
     <li><input type="button" onclick="playStop();" value="Play / Stop" /></li>
@@ -208,9 +208,9 @@
         radarLayers[nextFrame.path].setOpacity(100);
 
 
-        var pastOrForecast = nextFrame.time > Date.now() / 1000 ? 'FORECAST' : 'PAST';
+        var pastOrForecast = nextFrame.time > Date.now() / 1000 ? 'المتوقع تجريبي' : 'الواقع';
 
-        document.getElementById("timestamp").innerHTML = pastOrForecast + ': ' + (new Date(nextFrame.time * 1000)).toString();
+        document.getElementById("timestamp").innerHTML = الواقعOrالمتوقع تجريبي + ': ' + (new Date(nextFrame.time * 1000)).toString();
     }
 
     /**
@@ -230,7 +230,7 @@
      * Stop the animation
      * Check if the animation timeout is set and clear it.
      */
-    function stop() {
+    function توقف() {
         if (animationTimer) {
             clearTimeout(animationTimer);
             animationTimer = false;
@@ -239,16 +239,16 @@
         return false;
     }
 
-    function play() {
+    function أبداء() {
         showFrame(animationPosition + 1);
 
         // Main animation driver. Run this function every 500 ms
-        animationTimer = setTimeout(play, 500);
+        animationTimer = setTimeout(أبداء, 500);
     }
 
     function playStop() {
-        if (!stop()) {
-            play();
+        if (!توقف()) {
+            أبداء();
         }
     }
 
