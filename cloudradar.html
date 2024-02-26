@@ -208,9 +208,9 @@
         radarLayers[nextFrame.path].setOpacity(100);
 
 
-        var pastOrForecast = nextFrame.time > Date.now() / 1000 ? 'المتوقع تجريبي' : 'الواقع';
+        var pastOrForecast = nextFrame.time > Date.now() / 1000 ? 'forcast' :' past';
 
-        document.getElementById("timestamp").innerHTML = الواقعOrالمتوقع تجريبي + ': ' + (new Date(nextFrame.time * 1000)).toString();
+        document.getElementById("timestamp").innerHTML =  pastOrforcast + ': ' + (new Date(nextFrame.time * 1000)).toString();
     }
 
     /**
