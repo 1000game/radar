@@ -1,33 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>سحب ورادار</title>
-
+    <title>رادار وسحب</title>
+    
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
     <link href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" rel="stylesheet"/>
+    <link href="Leaflet.NavBar-master\src\Leaflet.NavBar.css" rel="stylesheet"/>
 
-<link href="Leaflet.NavBar.css" rel="stylesheet"/>
-	
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
- <script src="Leaflet.NavBar.js"></script>
-	
+    <script src="Leaflet.NavBar-master\src\Leaflet.NavBar.js"></script>
+
+
     <style type="text/css">
         li {
             list-style: none;
             display: inline-block;
         }
     </style>
+
+
+
 </head>
 <body>
 
 <ul style="text-align:center; position: absolute;top: 0; left: 0; right: 0; height: 80px;">
-    <li><input type="radio" name="kind" checked="checked" onchange="setKind('radar')">رادار)(الواقع+ المتوقع تجريبي) <input type="radio" name="kind" onchange="setKind('satellite')">السحب</li>
-
+    <li><input type="radio" name="kind" checked="checked" onchange="setKind('radar')">سحب<input type="radio" name="kind" onchange="setKind('satellite')">رادار(واقع+متوقع)</li>
+  <br>
     <li><input type="button" onclick="stop(); showFrame(animationPosition - 1); return;" value="&lt;" /></li>
-    <li><input type="button" onclick="playStop();" value="Play / Stop" /></li>
+    <li><input type="button" onclick="playStop();" value=" توفق  / أبداء "></li>
     <li><input type="button" onclick="stop(); showFrame(animationPosition + 1); return;" value="&gt;" /></li>
 
     <li><select id="colors" onchange="setColors(); return;">
@@ -46,6 +49,11 @@
 
 
 
+
+
+
+
+
 <div id="timestamp" style="text-align:center; position: absolute;top: 60px; left: 0; right: 0; height: 80px;">FRAME TIME</div>
 
 <div id="mapid" style="position: absolute; top: 80px; left: 0; bottom: 0; right: 0;"></div>
@@ -57,6 +65,8 @@
         attributions: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
     }).addTo(map);
 
+   
+
 
     var OpenTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
 	maxZoom: 17,
@@ -64,7 +74,7 @@
 });OpenTopoMap.addTo(map)
 
 
-	
+
 
     /**
      * RainViewer radar animation part
@@ -112,6 +122,8 @@
     };
     apiRequest.send();
 
+    
+   
     /**
      * Initialize internal data from the API response and options
      */
@@ -161,6 +173,8 @@
                 zIndex: frame.time
             });
 
+           
+
             // Track layer loading state to not display the overlay 
             // before it will completelly loads
             source.on('loading', startLoadingTile);
@@ -208,9 +222,9 @@
         radarLayers[nextFrame.path].setOpacity(100);
 
 
-        var pastOrForecast = nextFrame.time > Date.now() / 1000 ? 'forcast' :' past';
+        var pastOrForecast = nextFrame.time > Date.now() / 1000 ? 'تجريبي,المتوقع' : 'الواقع';
 
-        document.getElementById("timestamp").innerHTML =  pastOrforcast + ': ' + (new Date(nextFrame.time * 1000)).toString();
+        document.getElementById("timestamp").innerHTML = pastOrForecast + ': ' + (new Date(nextFrame.time * 1000)).toString();
     }
 
     /**
@@ -243,10 +257,10 @@
         showFrame(animationPosition + 1);
 
         // Main animation driver. Run this function every 500 ms
-        animationTimer = setTimeout(500, play);
+        animationTimer = setTimeout(play, 500);
     }
 
-    function playstop() {
+    function playStop() {
         if (!stop()) {
             play();
         }
@@ -291,13 +305,18 @@
         return false;
     }
 
-  var nav= L.control.navbar({
+    
+
+
+    var nav= L.control.navbar({
+            
             position:'topright'
-        
+    
         });nav.addTo(map)
-	
+
 </script>
 
 </body>
 </html>
+
 
